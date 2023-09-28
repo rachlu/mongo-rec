@@ -27,6 +27,15 @@ export default class PostConcept {
     await this.posts.deleteOne({ _id });
     return { msg: "Post deleted successfully!" };
   }
+
+  async getAuthor(_id: ObjectId) {
+    const response = await this.posts.readOne({ _id });
+    if (response) {
+      return response.author;
+    } else {
+      throw new NotAllowedError(`No Post with ID ${_id}`);
+    }
+  }
 }
 
 export class PostAuthorNotMatchError extends NotAllowedError {
